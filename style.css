@@ -1,0 +1,106 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.container{
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Game field */
+.field{
+    background-color: white;
+    height: 900px;
+    width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Single cell */
+.cell{
+    height: 50px;
+    width: 50px;
+    background-color: rgba(250, 235, 215, 0.8);
+}
+
+/* Snake model */
+.snake{
+    height: 50px;
+    width: 50px;
+    background-color: rgba(106, 142, 35, 0.8);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.food{
+    position: relative;
+    background-color: greenyellow;
+    height: 40px;
+    width: 40px;
+    border-radius: 50% 50% 40% 40%;
+    z-index: 3;
+}
+
+/* Leaf */
+.food::before{
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 9px;
+    background-color: green;
+    border-radius: 50% 0px 50% 0px;
+    top: -18px;
+    left: 26px;
+    transform: rotate(45deg);
+}
+
+/* Wood */
+.food::after{
+    content: "";
+    position: absolute;
+    height: 12px;
+    width: 5px;
+    background-color: rgb(173, 121, 53);
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
