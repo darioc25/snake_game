@@ -14,10 +14,10 @@ for(let i = 0; i < 18; i++) {
     }
 }
 
-// FPS
+// Game speed
 const gameSpeed = 1000/10;
 
-// Snake speed
+// Snake speed direction
 let speedY = 0;
 let speedX = 0;
 
@@ -72,12 +72,12 @@ function update(intervalName) {
 
         if(field[snake.y][snake.x].children[1]?.classList == "snake") {
             clearInterval(intervalName);
-        }
+        };
 
     } else {
         // Game running interruption
         clearInterval(intervalName);
-    }
+    };
 };
 
 // Function for food generation
@@ -94,11 +94,6 @@ function newFood() {
     const foodEl = document.createElement("div");
     foodEl.classList.add("food");
     field[foodY][foodX].appendChild(foodEl);
-};
-
-// Snake element creation and position initialization
-function drawSnake(posY, posX, snakePart) {
-    field[posY][posX].appendChild(snakePart);
 };
 
 // Keys and speed recording
