@@ -12,7 +12,13 @@ for(let i = 0; i < 18; i++) {
         field[i][j].classList.add("cell");
         fieldEl.appendChild(field[i][j]);
     }
-}
+};
+
+// Snake element
+const snakeEl = '<div class="snake"></div>';
+
+// Apple element
+const foodEl = '<div class="food"></div>';
 
 // Game speed
 const gameSpeed = 1000/10;
@@ -26,56 +32,53 @@ const snake = {
     y: 3,
     x: 3,
     body: []
-}
+};
 
 // Food generation
 newFood();
 
-let snakeParts = [];
 // Function for game field update
 function update(intervalName) {
     // Snake head updated position
     snake.y += speedY;
     snake.x += speedX;
     if((snake.y >= 0 && snake.y <= 17) && (snake.x >= 0 && snake.x <= 17)) {
-
-        // Clear snake parts in the field
-        if(snakeParts.length > 0) {
-            for(let i = 0; i < snakeParts.length; i++) {
-                snakeParts[i].remove();
-            }
-            snakeParts = [];
+        // Delete snake parts from field
+        if(snake.body.length) {
+            for(let i = 0; i < snake.body.length; i++) {
+                field[snake.body[i][0]][snake.body[i][1]].innerHTML = "";
+            };
         };
-
         // Eating food logic
         let foodEaten = false;
-        if(field[snake.y][snake.x].children[0]?.classList == "food") {
+        if(field[snake.y][snake.x].children[0]) {
             field[snake.y][snake.x].children[0].remove();
             foodEaten = true;
-            newFood();
         };
-
-        // Push a new head with updated coordinates to array
+        // Push a new updated head with last coordinates to array
         snake.body.unshift([snake.y, snake.x]);
-
         // Remove the last part of tail form array
         if((snake.body.length > 1) && !foodEaten) {
             snake.body.pop();
         };
-
         // Draw all the snake body in the field
         for(let i = 0; i < snake.body.length; i++) {
-            snakeParts[i] = document.createElement("div");
-            snakeParts[i].classList.add("snake");
-            field[snake.body[i][0]][snake.body[i][1]].appendChild(snakeParts[i]);
+            field[snake.body[i][0]][snake.body[i][1]].innerHTML += snakeEl;
         };
-
-        if(field[snake.y][snake.x].children[1]?.classList == "snake") {
+        // Food generation
+        foodEaten && newFood();
+        // Game interruption if snake touch the tail
+        if(field[snake.y][snake.x].children[1]) {
+            for(let i = 0; i < snake.body.length; i++) {
+                field[snake.body[i][0]][snake.body[i][1]].children[0].classList.add("hit");
+            }
             clearInterval(intervalName);
-        };
-
+        }
     } else {
-        // Game running interruption
+        // Game interruption if snake touch walls
+        for(let i = 0; i < snake.body.length; i++) {
+            field[snake.body[i][0]][snake.body[i][1]].children[0].classList.add("hit");
+        }
         clearInterval(intervalName);
     };
 };
@@ -89,11 +92,9 @@ function newFood() {
     while(field[foodY][foodX].childElementCount == 1) {
         foodY = Math.floor(Math.random() * 18);
         foodX = Math.floor(Math.random() * 18);
-    }
-    // Creating food element and draws it in field
-    const foodEl = document.createElement("div");
-    foodEl.classList.add("food");
-    field[foodY][foodX].appendChild(foodEl);
+    };
+    // Draws food in field
+    field[foodY][foodX].innerHTML = foodEl;
 };
 
 // Keys and speed recording
@@ -115,7 +116,7 @@ window.addEventListener("keydown", function(event) {
         speedY = 0;
         speedX = -1;
         keyRecord = event.key;
-    }
+    };
 });
 
 // Run game

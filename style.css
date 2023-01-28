@@ -40,6 +40,12 @@ body{
     background-color: rgba(106, 142, 35);
 }
 
+/* Hit color */
+.hit{
+    position: absolute;
+    background-color: orangered;
+}
+
 /* Food */
 .food{
     position: relative;
