@@ -20,6 +20,12 @@ const snakeEl = '<div class="snake"></div>';
 // Apple element
 const foodEl = '<div class="food"></div>';
 
+// Sound effect
+const eatingEffect = new Audio("media/eating_effect.mp3");
+const hitEffect = new Audio("media/hit_effect.mp3");
+eatingEffect.volume = 0.15;
+hitEffect.volume = 0.15;
+
 // Game speed
 const gameSpeed = 1000/10;
 
@@ -52,6 +58,8 @@ function update(intervalName) {
         // Eating food logic
         let foodEaten = false;
         if(field[snake.y][snake.x].children[0]) {
+            // Eating audio effect
+            eatingEffect.play();
             field[snake.y][snake.x].children[0].remove();
             foodEaten = true;
         };
@@ -69,16 +77,20 @@ function update(intervalName) {
         foodEaten && newFood();
         // Game interruption if snake touch the tail
         if(field[snake.y][snake.x].children[1]) {
+            // Hit audio effect
+            hitEffect.play();
             for(let i = 0; i < snake.body.length; i++) {
                 field[snake.body[i][0]][snake.body[i][1]].children[0].classList.add("hit");
-            }
+            };
             clearInterval(intervalName);
         }
     } else {
+        // Hit audio effect
+        hitEffect.play();
         // Game interruption if snake touch walls
         for(let i = 0; i < snake.body.length; i++) {
             field[snake.body[i][0]][snake.body[i][1]].children[0].classList.add("hit");
-        }
+        };
         clearInterval(intervalName);
     };
 };
